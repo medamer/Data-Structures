@@ -7,6 +7,12 @@ class ListNode:
         self.prev = prev
         self.value = value
         self.next = next
+    
+    def delete(self):
+        if self.prev:
+            self.prev.next = self.next
+        if self.next:
+            self.next.prev = self.prev
             
 """
 Our doubly-linked list class. It holds references to 
@@ -135,21 +141,22 @@ class DoublyLinkedList:
     order of the other elements of the List.
     """
     def delete(self, node):
-        if not self.head and node:
+        if not self.head and not self.tail:
             return None
+
+        self.length -= 1
+        
+        if self.head is self.tail:
+            self.head = None
+            self.tail = None
         elif self.head is node:
             self.head = node.next
-            if node.next is not None:
-                node.next.prev = node.prev
-            self.length -=1
+            node.delete()
         elif self.tail is node:
             self.tail = node.prev
-            if node.prev is not None:
-                node.prev.next = node.next
-            self.lentgh -=1
+            node.delete()
         else:
-            node = None
-            self.length -=1
+            node.delete()
 
     """
     Finds and returns the maximum value of all the nodes 
