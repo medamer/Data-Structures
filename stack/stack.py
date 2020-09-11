@@ -12,22 +12,22 @@ return elements in Last In First Out order.
 """
 #from singly_linked_list import LinkedList
 
-class StackA:
-    def __init__(self):
-        self.size = 0
-        self.storage = []
+# class StackA:
+#     def __init__(self):
+#         self.size = 0
+#         self.storage = []
 
-    def __len__(self):
-        return len(self.storage)
+#     def __len__(self):
+#         return len(self.storage)
 
-    def push(self, value):
-        self.storage.append(value)
+#     def push(self, value):
+#         self.storage.append(value)
 
-    def pop(self):
-        if len(self.storage) == 0:
-            return None
-        else:
-            self.storage.pop()
+#     def pop(self):
+#         if len(self.storage) == 0:
+#             return None
+#         else:
+#             self.storage.pop()
 
 import sys
 sys.path.append('./singly_linked_list')

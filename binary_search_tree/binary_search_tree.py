@@ -9,6 +9,55 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+import sys
+# sys.path.append('./queue/queue.py')
+# from queue import Queue
+# sys.path.append('./stack/stack.py')
+# from stack import Stack
+sys.path.append('./singly_linked_list')
+from singly_linked_list import LinkedList
+
+######## IMPORT QUEUE AND STACK CLASS ############
+class Queue:
+    def __init__(self):
+        self.size = 0
+        self.storage = LinkedList()
+
+    def __len__(self):
+        return self.size
+
+    def enqueue(self, value):
+        self.storage.add_to_tail(value)
+        self.size += 1
+
+    def dequeue(self):
+        if self.size == 0:
+            return None
+        self.size -= 1
+        return self.storage.remove_head()
+
+########################
+
+class Stack:
+    def __init__(self):
+        self.size = 0
+        self.storage = LinkedList()
+
+    def __len__(self):
+        return self.size
+
+    def push(self, value):
+        self.storage.add_to_tail(value)
+        self.size += 1
+
+    def pop(self):
+        if self.size == 0:
+            return None
+        self.size -= 1
+        return self.storage.remove_tail()
+
+######################################################
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -76,25 +125,45 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        if self.value in None:
-            return
-        elif self.left in None:
-            print(self.value)
-        elif self.left is not None:
-            return self.left.in_order_print()
-        elif self.right is None:
-            return self.left.in_order_print()
-        else:
-            return self.right.in_order_print()
-"""
+        if self.left is not None:
+            self.left.in_order_print()
+        print(self.value)
+        if self.right is not None:
+            self.right.in_order_print()
+
+
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        queue = Queue()
+        node = self
+        while node:
+            if node is None:
+                return
+            if node is not None:
+                print(node.value)
+            if node.left is not None:
+                queue.enqueue(node.left)
+            if node.right is not None:
+                queue.enqueue(node.right)
+            node = queue.dequeue()
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
+        stack = Stack()
+        node = self
+        while node:
+            if node is None:
+                return
+            if node is not None:
+                print(node.value)
+            if node.left is not None:
+                stack.push(node.left)
+            if node.right is not None:
+                stack.push(node.right)
+            node = stack.pop()
         pass
 
     # Stretch Goals -------------------------
@@ -102,16 +171,26 @@ class BSTNode:
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self):
-        pass
+        print(self.value)
+        if self.left is not None:
+            self.left.pre_order_dft()
+        if self.right is not None:
+            self.right.pre_order_dft()
+        
 
     # Print Post-order recursive DFT
     def post_order_dft(self):
-        pass
-"""
+        if self.left is not None:
+            self.left.post_order_dft()
+        if self.right is not None:
+            self.right.post_order_dft()
+        print(self.value)
+
+
 """
 This code is necessary for testing the `print` methods
 """
-"""
+
 bst = BSTNode(1)
 
 bst.insert(8)
@@ -129,7 +208,6 @@ print("elegant methods")
 print("pre order")
 bst.pre_order_dft()
 print("in order")
-bst.in_order_dft()
+bst.in_order_print()
 print("post order")
 bst.post_order_dft()  
-"""
